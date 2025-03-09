@@ -12,6 +12,15 @@ input, button {
     margin: 10px;
     padding: 8px;
 }
+/* suggestion button */
+.suggestion-btn{
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+        height: 100vh; /* Full page height */
+}
+
+/* card  */
 .container{ 
     flex:1;
 }
