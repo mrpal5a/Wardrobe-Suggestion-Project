@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wardrobe Suggestion</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <h1>Wardrobe Suggestion</h1>
+
+    <form action="/add" method="POST">
+        <input type="text" name="name" placeholder="Clothing Name" required>
+        <input type="text" name="type" placeholder="Type (Shirt, Pants, etc.)" required>
+        <input type="text" name="color" placeholder="Color" required>
+        <button type="submit">Add Clothing</button>
+    </form>
+
+    <h2>Your Wardrobe:</h2>
+    <ul>
+        <% clothes.forEach(clothing => { %>
+            <li><%= clothing.name %> - <%= clothing.type %> - <%= clothing.color %></li>
+        <% }); %>
+    </ul>
+
+    <h2>Suggested Outfit:</h2>
+    <p>👕 White T-Shirt + 👖 Blue Jeans (Demo Suggestion)</p>
+</body>
+</html>
