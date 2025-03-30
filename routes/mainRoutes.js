@@ -2,8 +2,12 @@ const express = require("express");
 const Shirt = require("../models/shirt");
 const Pant = require("../models/pant");
 const wrapAsync = require("../utils/wrapAsync.js");
-
 const router = express.Router({mergeParams:true});
+const multer = require("multer")
+const {storage} = require("../cloudConfig.js");
+// const upload = multer({ dest: "uploads/" });
+const upload = multer({ storage });
+
 
 //home route
 router.get("/", (req,res)=>{
@@ -27,12 +31,14 @@ router.get("/addshirt",(req,res)=>{
   res.render("addshirt");
 })
 // adding shirt to DB
-router.post("/shirts", async(req,res)=>{
+  router.post("/shirts",upload.single("shirt[image]"),  async (req, res) => {
+    let url = req.file.path;
+    let filename = req.file.filename;
   let newshirt = new Shirt(req.body.shirt);
+  newshirt.image = {url,filename};
   await newshirt.save();
-  console.log(newshirt);
   res.redirect("/shirts");
-})
+});
 
 //pant show route
 router.get(
@@ -46,11 +52,13 @@ router.get(
 router.get("/addpant", (req,res)=>{
   res.render("addpant.ejs");
 })
-// adding shirt to DB
-router.post("/pants", async(req,res)=>{
+// adding pants to DB
+router.post("/pants", upload.single("pant[image]"), async(req,res)=>{
+  let url = req.file.path;
+  let filename = req.file.filename;
   let newpant = new Pant(req.body.pant);
+  newpant.image = {url,filename};
   await newpant.save();
-  console.log(newpant);
   res.redirect("/pants");
 })
 module.exports = router;

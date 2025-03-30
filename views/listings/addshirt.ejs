@@ -1,7 +1,7 @@
 <% layout('../layouts/boilerplate') -%>
 <div class="row">
     <div class="col-8 offset-2">
-<form action="shirts" method="post" class="needs-validation" novalidate>
+<form action="shirts" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
     <div class="mb-3">
         <label for="title" class="form-label">Shirt Title</label>
         <input type="text" name="shirt[title]" class="form-control" required>
@@ -9,7 +9,7 @@
     </div>
     <div class="mb-3">
         <label for="image" class="form-label">Image</label>
-        <input type="text"name="shirt[image]" placeholder="Enter image URL/link" class="form-control " >
+        <input type="file"name="shirt[image]" placeholder="Enter image URL/link" class="form-control " required>
     </div>
     <button class="btn btn-outline-success mt-3">Add Shirt</button>
 </form>    
