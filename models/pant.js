@@ -7,6 +7,7 @@ const pantSchema = new mongoose.Schema({
     //     default: "https://m.media-amazon.com/images/I/61OZ6kPXbzL._AC_UL320_.jpg",
     //     set: (v) => v===""?"https://m.media-amazon.com/images/I/61OZ6kPXbzL._AC_UL320_.jpg":v,
     // },
+    dressType:String,
     image:{
         url:String,
         filename:String,

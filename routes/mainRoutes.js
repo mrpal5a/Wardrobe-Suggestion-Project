@@ -10,9 +10,48 @@ const upload = multer({ storage });
 
 
 //home route
-router.get("/", (req,res)=>{
-  res.render("home");
-})
+router.get("/",(req,res)=>res.render("home"));
+
+// router.get("/wearThis", wrapAsync(async (req, res) => {
+//   //random pant selection
+//   const allpants = await Pant.find({});
+//   const idsarray = allpants.map(item => item._id.toString());
+//   let num = idsarray.length;
+//   num = Math.floor(Math.random()*num);
+//   const pantId = idsarray[num];
+//   const pant = await Pant.findById(`${pantId}`);
+  
+//   // random shirt selection
+//   const allshirts = await Shirt.find({});
+//   const shirtIdarray = allshirts.map(item => item._id.toString());
+//   let shirtlen = shirtIdarray.length;
+//   shirtlen = Math.floor(Math.random()*shirtlen);
+//   const shirtId = shirtIdarray[shirtlen];
+//   const shirt = await Shirt.findById(`${shirtId}`);
+//   res.render("wearThis",{pant,shirt});
+// })
+// )
+
+router.get("/wearThis", wrapAsync(async (req, res) => {
+  const { dressType } = req.query;
+  console.log(dressType);
+
+  // Random pant of selected dressType
+  const pants = await Pant.find({ dressType });
+  const randomPant = pants[Math.floor(Math.random() * pants.length)];
+
+  // Random shirt of same dressType
+  const shirts = await Shirt.find({ dressType });
+  const randomShirt = shirts[Math.floor(Math.random() * shirts.length)];
+
+  if (!randomPant || !randomShirt) {
+    return res.send("No matching outfit found for selected dress type.");
+  }
+
+  res.render("wearThis", { pant: randomPant, shirt: randomShirt });
+}));
+
+
 // about route
 router.get("/about",(req,res)=>{
   res.render("about");

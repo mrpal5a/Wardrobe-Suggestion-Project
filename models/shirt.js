@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const shirtSchema = new mongoose.Schema({
     title:String,
+    dressType:String,
     image:{
         url:String,
         filename:String,

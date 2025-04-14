@@ -1,5 +1,12 @@
 <% layout('../layouts/boilerplate') -%>
 <h1>Welcome to the Home Page</h1>
-<div class="suggestion-btn">
-    <button class="btn btn-outline-dark">Get Suggestion</button>
-</div>
+<form action="/wearThis" method="get">
+    <select name="dressType" id="dressType" class="form-select">    
+        <option value="casual" selected>Casual</option>
+        <option value="formal">Formal</option>
+        <option value="party wear">Party wear</option>
+        <option value="chhapri">Chhapri</option>
+        <option value="ethnic">Ethnic</option>
+    </select>
+  <button class="btn btn-outline-dark">Get Suggestion</button>
+</form>
