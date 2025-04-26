@@ -1,0 +1,29 @@
+<% layout('../layouts/boilerplate') -%>
+<body>
+    <h2>Edit this shirt <%= ThisShirt.title %></h2>
+    <form action="/shirt/<%= ThisShirt._id %>?_method=PUT" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="title" class="form-label">Change Shirt Title</label>
+            <input type="text" name="shirt[title]" value="<%= ThisShirt.title %>" class="form-control" >
+        </div>
+        <div class="mb-3">
+            <label for="dressType">Change Dress Type:</label>
+            <select name="shirt[dressType]" id="dressType" class="form-select">    
+                <option value="<%= ThisShirt.dressType %>" selected><%= ThisShirt.dressType %></option>
+                <option value="casual" selected>Casual</option>
+                <option value="formal">Formal</option>
+                <option value="party wear">Party wear</option>
+                <option value="chhapri">Chhapri</option>
+                <option value="ethnic">Ethnic</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="file"name="shirt[image]" placeholder="Enter image URL/link" value="<%= ThisShirt.image %>" class="form-control ">
+        </div>
+        <button class="btn btn-outline-success mt-3">Update Shirt Details</button>
+    </form>    
+    <form action="/shirt/<%= ThisShirt._id %>?_method=DELETE" method="post">
+        <button class="btn btn-outline-danger mt-3">Delete</button>
+    </form>
+</body>

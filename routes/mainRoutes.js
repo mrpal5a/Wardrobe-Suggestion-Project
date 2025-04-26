@@ -100,4 +100,60 @@ router.post("/pants", upload.single("pant[image]"), async(req,res)=>{
   await newpant.save();
   res.redirect("/pants");
 })
+
+// update shirt details 
+router.get("/shirts/:id/edit",async (req,res)=>{
+  let {id} = req.params;
+  const ThisShirt = await Shirt.findById(id);
+  res.render("shirtsEdit.ejs", {ThisShirt});
+})
+
+router.put("/shirt/:id",upload.single("shirt[image]"), async (req,res)=>{
+  let {id} = req.params;
+  const shirt = await Shirt.findByIdAndUpdate(id, { ...req.body.shirt }); 
+  console.log(shirt);
+  if(typeof req.file !== "undefined"){ // agar user  ne new file upload ki hogi to hi listing ki image ko update krna hai
+    let url = req.file.path;
+    let filename = req.file.filename;
+    shirt.image = {url, filename}; // yeh per hum listing ki image ko upload kr rahe hai or save kr rahe hai
+    await shirt.save(); //listing image ko database mai update kr rahe hai
+  }
+  res.redirect("/shirts")
+})
+
+//delete shirt
+router.delete("/shirt/:id", async (req,res)=>{
+  let {id} = req.params;
+  let shirt = await Shirt.findByIdAndDelete(id);
+  console.log(shirt);
+  res.redirect("/shirts");
+})
+
+// update pant details 
+router.get("/pants/:id/edit",async (req,res)=>{
+  let {id} = req.params;
+  const ThisPant = await Pant.findById(id);
+  res.render("pantsEdit.ejs", {ThisPant});
+})
+
+router.put("/pant/:id",upload.single("pant[image]"), async (req,res)=>{
+  let {id} = req.params;
+  const pant = await Pant.findByIdAndUpdate(id, { ...req.body.pant }); 
+  console.log(pant);
+  if(typeof req.file !== "undefined"){ // agar user  ne new file upload ki hogi to hi listing ki image ko update krna hai
+    let url = req.file.path;
+    let filename = req.file.filename;
+    pant.image = {url, filename}; // yeh per hum listing ki image ko upload kr rahe hai or save kr rahe hai
+    await pant.save(); //listing image ko database mai update kr rahe hai
+  }
+  res.redirect("/pants")
+})
+
+//delete pant
+router.delete("/pant/:id", async (req,res)=>{
+  let {id} = req.params;
+  let pant = await Pant.findByIdAndDelete(id);
+  console.log(pant);
+  res.redirect("/pants");
+})
 module.exports = router;

@@ -4,7 +4,7 @@
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-3">
     <% for(let shirt of allshirts){ %>
     <div class="card col listing-card mx-4" style="width: 18rem;">
-        <img src="<%= shirt.image.url %>" class="card-img-top" alt="shirt" style="height: 20rem;">
+        <a href="/shirts/<%= shirt._id %>/edit"> <img  src="<%= shirt.image.url %>" class="card-img-top" alt="shirt" style="height: 20rem;"></a>
         <div class="card-body">
           <p class="card-text"><%= shirt.title %></p>
         </div>
