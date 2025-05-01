@@ -1,6 +1,6 @@
 <% layout('../layouts/boilerplate') -%>
 <body>
-    <h2>Edit this shirt <%= ThisShirt.title %></h2>
+    <h2>Edit this Wardrobe : <%= ThisShirt.title %></h2>
     <form action="/shirt/<%= ThisShirt._id %>?_method=PUT" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
         <div class="mb-3">
             <label for="title" class="form-label">Change Shirt Title</label>
@@ -23,7 +23,21 @@
         </div>
         <button class="btn btn-outline-success mt-3">Update Shirt Details</button>
     </form>    
+    <div class="row">
+        <div class="col d-flex">    
     <form action="/shirt/<%= ThisShirt._id %>?_method=DELETE" method="post">
-        <button class="btn btn-outline-danger mt-3">Delete</button>
+        <button class="btn btn-outline-danger mt-3 me-3">Delete</button>
     </form>
+    <% if(ThisShirt.favorite) { %>
+        <form action="/<%= ThisShirt._id %>/favorite" method="post">
+            <button class="btn btn-danger mt-3">Remove Favorite</button>
+        </form>
+    <% }else{ %>
+        <form action="/<%= ThisShirt._id %>/favorite" method="post">
+            <button class="btn btn-success mt-3">Add to Favorite</button>
+        </form>
+   <% } %>
+   
+        </div>
+    </div>
 </body>

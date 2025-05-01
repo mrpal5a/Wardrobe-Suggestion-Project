@@ -1,0 +1,21 @@
+<% layout('../layouts/boilerplate') -%>
+<h5>Occasions</h5>
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 gx-2">
+    <% for(let occasions of allOccasion){ %>
+  <a href="/occasions/<%=occasions._id%>" class="occasionDetail"><div
+    class="card col mb-3"
+    style="height: 200px; overflow: hidden; object-fit:fill; " 
+  >
+    <img
+      src="<%= occasions.image.url %>"
+      class="card-img"
+      alt="..."
+      
+    />
+    <div class="card-img-overlay">
+      <h5 class="card-title" style="color: white;"><%= occasions.title %></h5>
+    </div>
+  </div>
+</a>
+  <%}%>
+</div>

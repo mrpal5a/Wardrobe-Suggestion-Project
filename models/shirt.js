@@ -1,11 +1,15 @@
 const mongoose = require("mongoose");
-
+const Schema = mongoose.Schema;
 const shirtSchema = new mongoose.Schema({
     title:String,
     dressType:String,
     image:{
         url:String,
         filename:String,
+    },
+    favorite:{
+        type:Boolean,
+        default:false,
     },
 });
 

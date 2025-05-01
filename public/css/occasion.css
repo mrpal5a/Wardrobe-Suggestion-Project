@@ -1,0 +1,6 @@
+.occasionDetail{
+    opacity: 0.7;
+}
+.occasionDetail:hover{
+    opacity: 1;
+}

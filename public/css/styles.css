@@ -60,4 +60,24 @@ input, button {
     background-color: #ebebeb;
     height: 8rem;
 }
- 
+ /* occasion card*/
+ .card-img-overlay{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+ }
+
+ /* weather video */
+ #weatherVideo {  
+    height: 230px;
+    object-fit:cover;
+  }
+/* adding favourite option on hover */
+
+.fav{
+    opacity: 0.85;
+}
+.fav:hover{
+    opacity: 1;
+}

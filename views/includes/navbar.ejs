@@ -1,19 +1,32 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">Wardrobe</a>
+      <a class="navbar-brand" href="/"></i></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="collapse navbar-collapse d-flex justify-content-evenly" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
-          <a class="nav-link" href="/shirts">Shirts</a>
-          <a class="nav-link" href="/pants">Pants</a>
-          <a class="nav-link" href="/addshirt">Add Shirt</a>
-          <a class="nav-link" href="/addpant">Add Pant</a>
+          <a class="nav-link active" aria-current="page" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-scissors" viewBox="0 0 16 16">
+            <path d="M3.5 3.5c-.614-.884-.074-1.962.858-2.5L8 7.226 11.642 1c.932.538 1.472 1.616.858 2.5L8.81 8.61l1.556 2.661a2.5 2.5 0 1 1-.794.637L8 9.73l-1.572 2.177a2.5 2.5 0 1 1-.794-.637L7.19 8.61zm2.5 10a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0m7 0a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
+          </svg></a>
+          <a class="nav-link" href="/collection">My Collection</a>
+          <!-- <a class="nav-link" href="/shirts">Shirts</a>
+          <a class="nav-link" href="/pants">Pants</a> -->
+          <a class="nav-link" href="/newcollection">New Collection</a> 
+          <a class="nav-link" href="/favorite">Favorites</a>
+          <!-- <a class="nav-link" href="/addshirt">Add Shirt</a>
+          <a class="nav-link" href="/addpant">Add Pant</a> -->
+          <a class="nav-link" href="/weatherInfo">Weather</a>
+          <a class="nav-link" href="/occasion">Occasions</a>
           <a class="nav-link" href="/about">About us</a>
+          </div>
+          <div>
+            <form class="d-flex " role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
           <!-- <a class="nav-link disabled" aria-disabled="true">Disabled</a> -->
-        </div>
       </div>
     </div>
   </nav>

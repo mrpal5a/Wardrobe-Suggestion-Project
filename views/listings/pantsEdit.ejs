@@ -1,6 +1,6 @@
 <% layout('../layouts/boilerplate') -%>
 <body>
-    <h2>Edit this pant <%= ThisPant.title %></h2>
+    <h2>Edit this Wardrobe : <%= ThisPant.title %></h2>
     <form action="/pant/<%= ThisPant._id %>?_method=PUT" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
         <div class="mb-3">
             <label for="title" class="form-label">Change Pant Title</label>
@@ -22,8 +22,21 @@
             <input type="file"name="pant[image]" placeholder="Enter image URL/link" class="form-control ">
         </div>
         <button class="btn btn-outline-success mt-3">Update Pant Details</button>
-    </form>    
+    </form> 
+    <div class="row">
+        <div class="col d-flex">   
     <form action="/pant/<%= ThisPant._id %>?_method=DELETE" method="post">
-        <button class="btn btn-outline-danger mt-3">Delete</button>
+        <button class="btn btn-outline-danger mt-3 me-3">Delete</button>
     </form>
+    <% if(ThisPant.favorite) { %>
+        <form action="/<%= ThisPant._id %>/favorite" method="post">
+            <button class="btn btn-danger mt-3 me-3">Remove Favorite</button>
+        </form>
+    <% }else{ %>
+        <form action="/<%= ThisPant._id %>/favorite" method="post">
+            <button class="btn btn-success mt-3">Add to Favorite</button>
+        </form>
+   <% } %>
+</div>
+</div>
 </body>

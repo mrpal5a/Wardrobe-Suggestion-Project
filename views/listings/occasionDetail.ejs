@@ -1,0 +1,19 @@
+<% layout('../layouts/boilerplate') -%>
+<body>
+<!-- <h1><%# occasion.title %></h1>
+<img src="<%#= occasion.image.url %>" alt="Occasion Image" width="300" /> -->
+<!-- <p>Length: <%= particularCollection.length %></p>
+<pre><%= JSON.stringify(particularCollection, null, 2) %></pre> -->
+
+<% for(let collection of particularCollection){ %>
+  <img src="<%# collection.image.url %>" alt="">
+<%} %>
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+  <% for(let collection of particularCollection) { %>
+    <div class="card col listing-card mx-4 d-flex align-items-center justify-content-center" style="width: 18rem;">
+    <img src="<%= collection.image.url %>" alt="">
+  </div>
+<% } %>
+
+</div>
+</body>

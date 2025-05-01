@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const Schema = mongoose.Schema;
 const pantSchema = new mongoose.Schema({
     title:String,
     // image:{
@@ -11,6 +11,10 @@ const pantSchema = new mongoose.Schema({
     image:{
         url:String,
         filename:String,
+    },
+    favorite:{
+        type:Boolean,
+        default:false,
     },
 });
 
