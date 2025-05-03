@@ -81,3 +81,42 @@ input, button {
 .fav:hover{
     opacity: 1;
 }
+
+.card-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin: 50px 0;
+  }
+  
+  .gsap {
+    width: 200px;
+    height: 250px;
+    /* background: linear-gradient(135deg, #00c6ff, #0072ff); */
+    color: white;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    /* opacity: 0; important for gsap */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .gsap:hover {
+    transform: scale(1.05);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.4);
+  }
+  
+
+/* zoom effect while hovering over the card */
+.image {
+    transition: transform 0.3s ease; /* Smooth zoom effect */
+  }
+  
+  .card:hover .image {
+    transform: scale(1.05); /* Zoom in 5% on hover */
+  }
+  

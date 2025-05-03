@@ -1,0 +1,43 @@
+<% layout('../layouts/boilerplate') -%>
+
+<div class="row card-row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 my-5">
+    <% for(let shirt of shirts){ %>
+    <div
+      class="card col gsap listing-card mx-4 d-flex align-items-center justify-content-center fav"
+      style="width: 18rem"
+    >
+      <a href="/shirts/<%= shirt._id %>/edit">
+        <img
+          src="<%= shirt.image.url %>"
+          class="card-img-top image"
+          alt="pant"
+          style="height: 20rem"
+        />
+      </a>
+      <div class="card-body">
+          <p class="card-text"><%= shirt.title %></p>
+        </div>
+    </div>
+    <%}%>
+  </div>
+
+  <div class="row card-row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+    <% for(let pant of pants){ %>
+    <div
+      class="card col gsap listing-card mx-4 d-flex align-items-center justify-content-center fav"
+      style="width: 18rem"
+    >
+      <a href="/pants/<%= pant._id %>/edit">
+        <img
+          src="<%= pant.image.url %>"
+          class="card-img-top image"
+          alt="pant"
+          style="height: 20rem"
+        />
+      </a>
+      <div class="card-body">
+        <p class="card-text"><%= pant.title %></p>
+      </div>
+    </div>
+    <%}%>
+  </div>

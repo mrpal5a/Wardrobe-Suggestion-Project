@@ -3,15 +3,15 @@
   <div class="row">
     <div class="col">
       <a href="/collection"><button class="btn btn-outline-success mt-3 me-3">All</button></a>
-        <a href="/shirts"> <button class="btn btn-outline-success mt-3 me-3">Shirts</button></a>
+        <a href="/shirts"> <button class="btn btn-secondary mt-3 me-3">Shirts</button></a>
         <a href="/pants"> <button class="btn btn-outline-success mt-3 ">Pants</button></a>
     </div>
 </div>
     <h2>Shirts</h2> 
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-3">
+    <div class="row card-row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-3">
     <% for(let shirt of allshirts){ %>
-    <div class="card col listing-card mx-4 d-flex align-items-center justify-content-center fav" style="width: 18rem;">
-        <a href="/shirts/<%= shirt._id %>/edit"> <img  src="<%= shirt.image.url %>" class="card-img-top " alt="shirt" style="height: 20rem;"></a>
+    <div class="card col gsap listing-card mx-4 d-flex align-items-center justify-content-center fav" style="width: 18rem;">
+        <a href="/shirts/<%= shirt._id %>/edit"> <img  src="<%= shirt.image.url %>" class="card-img-top image" alt="shirt" style="height: 20rem;"></a>
         <div class="card-body">
           <p class="card-text"><%= shirt.title %></p>
         </div>

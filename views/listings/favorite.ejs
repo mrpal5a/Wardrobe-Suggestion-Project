@@ -2,16 +2,16 @@
 
 <h2>Welcome to your Favorite Section</h2>
 
-<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+<div class="row card-row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 my-3">
   <% for(let shirt of favShirts){ %>
   <div
-    class="card col listing-card mx-4 d-flex align-items-center justify-content-center fav"
+    class="card col gsap listing-card mx-4 d-flex align-items-center justify-content-center fav"
     style="width: 18rem"
   >
     <a href="/shirts/<%= shirt._id %>/edit">
       <img
         src="<%= shirt.image.url %>"
-        class="card-img-top"
+        class="card-img-top image"
         alt="pant"
         style="height: 20rem"
       />
@@ -22,16 +22,16 @@
   </div>
   <%}%>
 </div>
-<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+<div class="row card-row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
   <% for(let pant of favPants){ %>
   <div
-    class="card col listing-card mx-4 d-flex align-items-center justify-content-center fav"
+    class="card col gsap listing-card mx-4 d-flex align-items-center justify-content-center fav"
     style="width: 18rem"
   >
     <a href="/pants/<%= pant._id %>/edit">
       <img
         src="<%= pant.image.url %>"
-        class="card-img-top"
+        class="card-img-top image"
         alt="pant"
         style="height: 20rem"
       />

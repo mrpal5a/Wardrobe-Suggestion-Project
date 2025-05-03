@@ -1,43 +1,62 @@
 <% layout('../layouts/boilerplate') -%>
-<h2>Try this collection</h2>
-<div class="row row-cols-lg-2 row-cols-md-2 row-cols-sm-1">
-  <div class="card col listing-card mx-4" style="width: 18rem">
-    Shirt
-    <img
-      src="<%= shirt.image.url %>"
-      class="card-img-top"
-      alt="pant"
-      style="height: 20rem"
-    />
+
+<div class="container mt-5">
+
+  <div class="text-center mb-5">
+    <h2 class="display-5 fw-bold text-dark">🧥 Try This Suggested Collection</h2>
+    <p class="text-muted">Here's your outfit suggestion based on your preference.</p>
   </div>
-  <div class="card col listing-card mx-4" style="width: 18rem">
-    Pant
-    <img
-      src="<%= pant.image.url %>"
-      class="card-img-top"
-      alt="pant"
-      style="height: 20rem"
-    />
+
+  <div class="row justify-content-center g-4 mb-5">
+    <!-- Shirt Card -->
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 rounded-4 p-3 text-center">
+        <h5 class="mb-3">👕 Shirt</h5>
+        <img
+          src="<%= shirt.image.url %>"
+          class="card-img-top rounded-3 image"
+          alt="shirt"
+          style="height: 20rem; object-fit: cover;"
+        />
+      </div>
+    </div>
+
+    <!-- Pant Card -->
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 rounded-4 p-3 text-center">
+        <h5 class="mb-3">👖 Pant</h5>
+        <img
+          src="<%= pant.image.url %>"
+          class="card-img-top rounded-3 image"
+          alt="pant"
+          style="height: 20rem; object-fit: cover;"
+        />
+      </div>
+    </div>
   </div>
-</div>
-<div class="row row-cols-lg-2 row-cols-md-2 row-cols-sm-1">
-    <div>
-        <form action="/wearThis" method="get" class="mb-3">
-            <select name="dressType" id="dressType" class="form-select">    
-                <option value="casual" selected>Casual</option>
-                <option value="formal">Formal</option>
-                <option value="party wear">Party wear</option>
-                <option value="ethnic">Ethnic</option>
-                <option value="summer">Summer</option>
-                <option value="winter">Winter</option>
-            </select> <br>
-            <button class="btn btn-outline-dark">Get Suggestion</button>
-        </form>
+
+  <!-- Action Section -->
+  <div class="row justify-content-center my-3">
+    <div class="col-md-5">
+      <form action="/wearThis" method="get" class="mb-3">
+        <label for="dressType" class="form-label fs-5 fw-semibold">🎯 Choose another dress type:</label>
+        <select name="dressType" id="dressType" class="form-select mb-3 fs-6">
+          <option value="casual" selected>👟 Casual</option>
+          <option value="formal">🧥 Formal</option>
+          <option value="party wear">🎉 Party wear</option>
+          <option value="ethnic">🕌 Ethnic</option>
+          <option value="summer">🌞 Summer</option>
+          <option value="winter">❄️ Winter</option>
+        </select>
+        <div class="d-grid">
+          <button class="btn btn-dark btn-lg rounded-pill">🔁 Get Another Suggestion</button>
+        </div>
+      </form>
+
+      <form action="/" method="get" class="d-grid">
+        <button class="btn btn-outline-success btn-lg rounded-pill">🏠 Back to Home</button>
+      </form>
     </div>
-    <div>
-        <form action="/" method="get">
-            <button class="btn btn-outline-success">Home</button>
-        </form>
-    </div>
-    <br><br>
+  </div>
+
 </div>

@@ -18,3 +18,36 @@
     })
   })()
   console.log("Bootstrap validation script loaded!");
+
+ // Register the ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
+
+// Wait for the full page to load before running animations
+window.addEventListener("load", () => {
+  // Get all card elements
+  const cards = gsap.utils.toArray(".gsap");
+
+  cards.forEach((card, index) => {
+    let animationProps = {
+      scrollTrigger: {
+        trigger: card,
+        start: "top 80%", // when card top reaches 80% of viewport
+        toggleActions: "play none none reverse",
+      },
+      opacity: 0,
+      duration: 1,
+    };
+
+    // Animate based on card position (left, center, right)
+    if (index % 3 === 0) {
+      animationProps.x = -100; // Left
+    } else if (index % 3 === 1) {
+      animationProps.y = 100; // Bottom
+    } else {
+      animationProps.x = 100; // Right
+    }
+
+    // Apply the animation to the card
+    gsap.from(card, animationProps);
+  });
+});

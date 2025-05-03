@@ -1,13 +1,6 @@
 <% layout('../layouts/boilerplate') -%>
-<h1>Welcome to the Home Page</h1>
-<!-- <div class="card bg-dark text-white" style="width: 600px; position: fixed; top: 0px; right: 0px;">
-  <img src="wardrobelogo.png"  class="card-img" alt="weather image">
-  <div class="card-img-overlay">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-    <p class="card-text">Last updated 3 mins ago</p>
-  </div>
-</div> -->
+<!-- <h1>Welcome to the Home Page</h1>
+
 <form action="/wearThis" method="get">
     <select name="dressType" id="dressType" class="form-select">    
         <option value="casual" selected>Casual</option>
@@ -18,4 +11,35 @@
         <option value="winter">Winter</option>
     </select> <br>
   <button class="btn btn-outline-dark">Get Suggestion</button>
-</form>
+</form> -->
+<div class="container mt-5">
+  <div class="text-center">
+    <h1 class="display-4 mb-4 fw-bold text-dark">👕 Welcome to Wardrobe Suggestion</h1>
+    <p class="lead text-muted mb-5">
+      Get the perfect outfit suggestion based on your occasion or mood.
+    </p>
+  </div>
+
+  <div class="row justify-content-center my-3">
+    <div class="col-md-6">
+      <div class="card shadow-lg border-0 p-4 rounded-4">
+        <h4 class="text-center mb-3 text-primary">Select your dress type</h4>
+        <form action="/wearThis" method="get">
+          <select name="dressType" id="dressType" class="form-select mb-4 fs-5">
+            <option value="casual" selected>👟 Casual</option>
+            <option value="formal">🧥 Formal</option>
+            <option value="party wear">🎉 Party wear</option>
+            <option value="ethnic">🕌 Ethnic</option>
+            <option value="summer">🌞 Summer</option>
+            <option value="winter">❄️ Winter</option>
+          </select>
+          <div class="d-grid">
+            <button class="btn btn-dark btn-lg rounded-pill">
+              🔍 Get Suggestion
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -296,5 +296,63 @@ router.post("/ocas", upload.single("image"), async (req, res) => {
   res.redirect("/addocas");
 });
 
+// search bar
+router.post("/search", async (req, res) => {
+  try {
+    const searchItem = req.body.clothe;
+
+    // Search both collections
+    // const shirts = await Shirt.find(
+    //   { title: { $regex: searchItem, $options: "i" } },
+    //   { title: 1 }
+    // );
+    const shirts = await Shirt.find(
+      {
+        $or: [
+          { title: { $regex: searchItem, $options: "i" } }, // Search in title
+          { dressType: { $regex: searchItem, $options: "i" } }, // Search in dressType
+        ],
+      }
+    )
+    console.log(shirts);
+    const pants = await Pant.find(
+      {
+        $or: [
+          { title: { $regex: searchItem, $options: "i" } }, // Search in title
+          { dressType: { $regex: searchItem, $options: "i" } }, // Search in dressType
+        ],
+      }
+    );
+
+    // Format results (lowercase title)
+    const formattedShirts = shirts.map(shirt => ({
+      _id: shirt._id,
+      title: shirt.title.toLowerCase()
+    }));
+
+    const formattedPants = pants.map(pant => ({
+      _id: pant._id,
+      title: pant.title.toLowerCase()
+    }));
+
+    // Check if no items found in both
+    if (formattedShirts.length === 0 && formattedPants.length === 0) {
+      return res.status(404).json({ message: `No Shirt or Pant found with title: ${searchItem}` });
+    }
+    // storing only ids of found items
+    const PantIds = formattedPants.map(item => item._id);
+    const ShirtIds = formattedShirts.map(item => item._id);
+    // searching the items on the basis of ids in both the models
+    const foundpants = await Pant.find({ _id: { $in: PantIds } });
+    const foundshirts = await Shirt.find({_id:{$in:ShirtIds}});
+    console.log(foundpants);
+    console.log(foundshirts);
+    res.render("search.ejs", {pants : foundpants, shirts: foundshirts});
+    
+  } catch (error) {
+    console.error("Search error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 module.exports = router;

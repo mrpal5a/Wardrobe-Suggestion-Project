@@ -49,24 +49,30 @@
   <% if(!shirt || !pant ){ %>
 
   <%}else { %>
-    <div class="row row-cols-lg-2 row-cols-md-2 row-cols-sm-1 d-flex justify-content-center align-items-center" >
-      <div class="card col listing-card mx-4 " style="width: 18rem">
-        Shirt
+    <div class="row card-row row-cols-lg-2 row-cols-md-2 row-cols-sm-1 d-flex justify-content-center align-items-center" >
+      <div class="card col gsap listing-card mx-4 " style="width: 18rem">
+        <!-- Shirt -->
         <img
         src="<%= shirt.image.url %>"
-        class="card-img-top"
+        class="card-img-top image"
         alt="pant"
         style="height: 20rem"
         />
+        <div class="card-body">
+          <p class="card-text"><%= shirt.title %></p>
+        </div>
       </div>
-      <div class="card col listing-card mx-4" style="width: 18rem">
-        Pant
+      <div class="card gsap col listing-card mx-4" style="width: 18rem">
+        <!-- Pant -->
         <img
         src="<%= pant.image.url %>"
-        class="card-img-top"
+        class="card-img-top image"
         alt="pant"
         style="height: 20rem"
         />
+        <div class="card-body">
+          <p class="card-text"><%= pant.title %></p>
+        </div>
       </div>
     </div>
   <%} %>
