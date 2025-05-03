@@ -94,7 +94,7 @@ router.get("/wearThis", wrapAsync(async (req, res) => {
   const randomShirt = shirts[Math.floor(Math.random() * shirts.length)];
 
   if (!randomPant || !randomShirt) {
-    return res.send("No matching outfit found for selected dress type.");
+    return res.render("NoPairFound.ejs");
   }
 
   res.render("wearThis", { pant: randomPant, shirt: randomShirt });
@@ -354,5 +354,10 @@ router.post("/search", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+//not found page
+router.use("*", (req,res)=>{
+  res.status(404).render("NotFound.ejs");
+})
 
 module.exports = router;
