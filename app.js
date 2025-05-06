@@ -14,7 +14,33 @@ const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, "public")));
+const session = require("express-session");
+const flash = require("connect-flash");
+app.use(
+  session({
+    secret: "wardrobe_team_work",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      expires: Date.now() + 1000 * 60 * 60 * 24 * 3,
+      maxAge: 1000 * 60 * 60 * 24,
+      httpOnly: true,
+    },
+  })
+);
+app.use(flash());
 
+// // flash message
+// app.use(flash({
+//   sessionKeyName: 'express-flash-message',
+// }))
+
+//creating flash
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
+});
 // Routes
 app.use("/", mainRoutes);
 

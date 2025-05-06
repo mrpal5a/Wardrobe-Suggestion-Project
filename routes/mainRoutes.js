@@ -166,6 +166,7 @@ router.post("/pants", upload.single("pant[image]"), async(req,res)=>{
 router.get("/shirts/:id/edit",async (req,res)=>{
   let {id} = req.params;
   const ThisShirt = await Shirt.findById(id);
+  req.flash("success", "Shirt Detail updated successfully");
   res.render("shirtsEdit.ejs", {ThisShirt});
 })
 

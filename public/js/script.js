@@ -19,6 +19,20 @@
   })()
   console.log("Bootstrap validation script loaded!");
 
+  // type / this to search
+  document.addEventListener("keydown",function(event){
+    const searchBar = document.getElementById('search');
+  
+    if(event.key === "/" && !event.ctrlKey && !event.metaKey){
+      event.preventDefault();
+      searchBar.focus();
+    }
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+      event.preventDefault(); // prevent default browser search
+      searchBar.focus();
+    }
+  } )
+
  // Register the ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
@@ -51,3 +65,4 @@ window.addEventListener("load", () => {
     gsap.from(card, animationProps);
   });
 });
+
