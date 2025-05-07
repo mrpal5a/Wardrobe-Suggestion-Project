@@ -6,7 +6,10 @@ const app = express();
 const path = require("path");
 const ejsMate = require("ejs-mate");
 app.engine("ejs", ejsMate);
+const passport = require("passport");
+const LocalStrategy = require("passport-local")
 // Middleware
+const User = require("./models/user")
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views/listings"));
 app.use(express.urlencoded({ extended: true }));
@@ -16,24 +19,26 @@ app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, "public")));
 const session = require("express-session");
 const flash = require("connect-flash");
-app.use(
-  session({
-    secret: "wardrobe_team_work",
+
+const sessionOptions = {
+  secret: "wardrobe_team_work",
     resave: false,
     saveUninitialized: true,
-    cookie: {
-      expires: Date.now() + 1000 * 60 * 60 * 24 * 3,
-      maxAge: 1000 * 60 * 60 * 24,
-      httpOnly: true,
-    },
-  })
+    cookie:{
+      expires: Date.now() + 1000*60*60*24*3,
+      maxAge: 1000 * 60 * 60 * 24 * 3,
+      httpOnly:true,
+    }
+}
+app.use(
+  session(sessionOptions)
 );
 app.use(flash());
-
-// // flash message
-// app.use(flash({
-//   sessionKeyName: 'express-flash-message',
-// }))
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));// user authenticate
+passport.serializeUser(User.serializeUser()); // user details store in session
+passport.deserializeUser(User.deserializeUser()); // user details remove from session
 
 //creating flash
 app.use((req, res, next) => {

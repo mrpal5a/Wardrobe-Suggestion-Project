@@ -24,3 +24,11 @@ module.exports.weatherInfo = async(req,res,next)=>{
       next(err);
   }
   }
+
+  module.exports.isAuthenticated = async (req,res,next)=>{
+    if(!req.isAuthenticated()){
+      req.flash("error", "You must be logged in first");
+      return res.render("users/login.ejs");
+    }
+    next();
+  }

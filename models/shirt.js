@@ -11,6 +11,10 @@ const shirtSchema = new mongoose.Schema({
         type:Boolean,
         default:false,
     },
+    owner :{
+        type:Schema.Types.ObjectId,
+        ref:"User"
+    }
 });
 
 const Shirt = mongoose.models.Clothing || mongoose.model("Shirt", shirtSchema);
