@@ -262,6 +262,12 @@ router.delete("/pant/:id", isAuthenticated, async (req, res) => {
   res.redirect("/pants");
 });
 
+//add ocas route
+// for adding clothes to any occasion by just changing the model name
+router.get("/addocas", (req, res) => {
+  res.render("addoccasions.ejs");
+});
+
 //occasion
 router.get(
   "/occasion", 
@@ -300,12 +306,25 @@ router.get(
   })
 );
 
-//add ocas route
-// for adding clothes to any occasion by just changing the model name
-router.get("/addocas", (req, res) => {
-  res.render("addoccasions.ejs");
-});
 
+// adding ocassion to DB
+router.post("/ocas", upload.single("image"), async (req, res) => {
+  // Check if file was uploaded
+  if (!req.file) {
+    return res.status(400).send("No file uploaded.");
+  }
+
+  const { path: url, filename } = req.file;
+
+  // Create new entry with just the image
+  let newoccas = new collegePart({
+    // just change the model name to add more clothes to that occasion
+    image: { url, filename },
+  });
+
+  await newoccas.save();
+  res.redirect("/addocas");
+});
 // adding favorite
 router.post("/:id/favorite", async (req, res) => {
   let { id } = req.params;
@@ -335,24 +354,6 @@ router.get("/favorite",  isAuthenticated,async (req, res) => {
   res.render("favorite.ejs", { favPants, favShirts });
 });
 
-// adding ocassion to DB
-router.post("/ocas", upload.single("image"), async (req, res) => {
-  // Check if file was uploaded
-  if (!req.file) {
-    return res.status(400).send("No file uploaded.");
-  }
-
-  const { path: url, filename } = req.file;
-
-  // Create new entry with just the image
-  let newoccas = new FirstDate({
-    // just change the model name to add more clothes to that occasion
-    image: { url, filename },
-  });
-
-  await newoccas.save();
-  res.redirect("/addocas");
-});
 
 // search bar
 router.post("/search", isAuthenticated, async (req, res) => {
@@ -458,6 +459,96 @@ router.get("/logout", (req,res,next)=>{
     res.redirect("/login");
   })
 })
+
+
+// forgot password route
+router.get("/forgot-password", (req, res) => {
+  res.render("forgot-password"); // make this EJS form
+});
+
+// forgot password requirement
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
+ // forgot password logic
+
+router.post("/forgot-password", async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    req.flash("error", "No account with that email exists.");
+    return res.redirect("/forgot-password");
+  }
+
+  // Generate reset token
+  const token = crypto.randomBytes(20).toString("hex");
+
+  user.resetPasswordToken = token;
+  user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+  await user.save();
+
+  // Setup email
+  const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: "physicspw1@gmail.com",
+      pass: "vdjkzrgaoshpzcne",
+    }
+  });
+
+  const mailOptions = {
+    to: user.email,
+    from: "physicspw1@gmail.com",
+    subject: "Password Reset",
+    text: `Click the following link to reset your password:\n\nhttp://${req.headers.host}/reset-password/${token} This email is from Wardrobe Team. Plese Do not reply`
+  };
+
+  await transporter.sendMail(mailOptions).catch((err) => {
+  console.error("Email failed to send:", err);
+  req.flash("error", "Failed to send email. Try again.");
+  return res.redirect("/login");
+});
+
+});
+
+// password reset token verification
+router.get("/reset-password/:token", async (req, res) => {
+  const user = await User.findOne({
+    resetPasswordToken: req.params.token,
+    resetPasswordExpires: { $gt: Date.now() }
+  });
+
+  if (!user) {
+    req.flash("error", "Password reset token is invalid or has expired.");
+    return res.redirect("/forgot-password");
+  }
+
+  res.render("reset-password", { token: req.params.token });
+});
+
+// handle new password submission
+router.post("/reset-password/:token", async (req, res) => {
+  const user = await User.findOne({
+    resetPasswordToken: req.params.token,
+    resetPasswordExpires: { $gt: Date.now() }
+  });
+
+  if (!user) {
+    req.flash("error", "Token is invalid or expired.");
+    return res.redirect("/forgot-password");
+  }
+
+  const { password } = req.body;
+ await user.setPassword(password);
+// await user.save();
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpires = undefined;
+  await user.save();
+
+  req.flash("success", "Your password has been reset. Please login.");
+  res.redirect("/login");
+});
+
 
 //not found page
 router.use("*", (req, res) => {

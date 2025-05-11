@@ -7,6 +7,8 @@ const userSchema = new Schema({
         type:String,
         required:true,
     },
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
     //we will not add username and password to the schema because that will be automatically done by passport-local-mongoose
 });
 
