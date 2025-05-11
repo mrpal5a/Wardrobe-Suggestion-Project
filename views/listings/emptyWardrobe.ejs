@@ -1,0 +1,58 @@
+<% layout('../layouts/boilerplate') -%>
+
+<style>
+  .empty-wardrobe-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    text-align: center;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .empty-wardrobe-container img {
+    width: 250px;
+    margin-bottom: 20px;
+    opacity: 0.85;
+  }
+
+  .empty-wardrobe-container h1 {
+    font-size: 2rem;
+    color: #444;
+    margin-bottom: 10px;
+  }
+
+  .empty-wardrobe-container h2 {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 20px;
+  }
+
+  .empty-wardrobe-container a {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+
+  .empty-wardrobe-container a:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<div class="empty-wardrobe-container">
+  <img src="undraw_space-exploration_dhu1.svg" alt="Empty Wardrobe">
+  <h1>Looks like there's nothing in your wardrobe 👕</h1>
+  <h2>Why not start by adding your favorite outfits?</h2>
+  <div class="d-flex">
+    <a href="/newcollection" class="me-3">Add New Collection</a>
+  <a href="https://www.flipkart.com/search?q=shirt+for+men&sid=clo%2Cash%2Caxc%2Cmmk%2Ckp7&as=on&as-show=on&otracker=AS_QueryStore_OrganicAutoSuggest_1_5_na_na_na&otracker1=AS_QueryStore_OrganicAutoSuggest_1_5_na_na_na&as-pos=1&as-type=RECENT&suggestionId=shirt+for+men%7CCasual+Shirts&requestId=55b0d179-11be-4a23-a962-d5747e03c447&as-backfill=on" target="_blank">Buy something</a>
+</div>
+</div>

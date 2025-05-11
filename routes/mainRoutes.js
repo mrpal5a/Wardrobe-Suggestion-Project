@@ -35,9 +35,10 @@ router.get("/weatherInfo",isAuthenticated, async (req, res) => {
   });
 });
 
-router.post("/weatherInfo", async (req, res) => {
+router.post("/weatherInfo",isAuthenticated, async (req, res) => {
   let city = req.body.city || "Ankleshwar";
   try {
+    const currUser = req.user;
     const response = await fetch(
       `${API_URL}?q=${city}&appid=${API_KEY}&units=metric`
     );
@@ -57,10 +58,10 @@ router.post("/weatherInfo", async (req, res) => {
     let temperature = result.temp;
     let dressType = temperature <= 20 ? "winter" : "summer";
     let outside = dressType == "summer" ? "HOT" : "COLD";
-    const weatherPants = await Pant.find({ dressType });
+    const weatherPants = await Pant.find({ dressType, owner: currUser });
     const randomPant =
       weatherPants[Math.floor(Math.random() * weatherPants.length)];
-    const weatherShirts = await Shirt.find({ dressType });
+    const weatherShirts = await Shirt.find({ dressType, owner: currUser });
     const randomShirt =
       weatherShirts[Math.floor(Math.random() * weatherShirts.length)];
     res.render("weather.ejs", {
@@ -75,7 +76,7 @@ router.post("/weatherInfo", async (req, res) => {
 });
 
 //home route
-router.get("/", isAuthenticated,(req, res) => res.render("home"));
+router.get("/", (req, res) => res.render("home"));
 
 // router.get("/wearThis", wrapAsync(async (req, res) => {
 //   //random pant selection
@@ -102,13 +103,14 @@ router.get(
   wrapAsync(async (req, res) => {
     const { dressType } = req.query;
     // console.log(dressType);
-
+    const currUser = req.user;
+    
     // Random pant of selected dressType
-    const pants = await Pant.find({ dressType });
+    const pants = await Pant.find({ dressType, owner: currUser });
     const randomPant = pants[Math.floor(Math.random() * pants.length)];
 
     // Random shirt of same dressType
-    const shirts = await Shirt.find({ dressType });
+    const shirts = await Shirt.find({ dressType, owner: currUser });
     const randomShirt = shirts[Math.floor(Math.random() * shirts.length)];
 
     if (!randomPant || !randomShirt) {
@@ -126,8 +128,12 @@ router.get("/about", (req, res) => {
 
 // collection route
 router.get("/collection", isAuthenticated, async (req, res) => {
-  const shirts = await Shirt.find({});
-  const pants = await Pant.find({});
+  const currUser = req.user;
+  const shirts = await Shirt.find({ owner: currUser });
+  const pants = await Pant.find({ owner: currUser });
+  if(shirts.length === 0 && pants.length === 0 ){
+    return res.render("emptyWardrobe.ejs");
+  }
   res.render("collection.ejs", { shirts, pants });
 });
 
@@ -140,7 +146,13 @@ router.get("/newcollection",  isAuthenticated,async (req, res) => {
 router.get(
   "/shirts", isAuthenticated,
   wrapAsync(async (req, res) => {
-    const allshirts = await Shirt.find({});
+    const currUser = req.user;
+    // console.log(currUser._id);
+    // await Shirt.updateMany({}, { owner: currUser._id });
+    // const allshirts = await Shirt.find({});
+    // const allshirts = await Shirt.find({ owner: currUser._id });
+    const allshirts = await Shirt.find({ owner: currUser._id }).populate("owner");
+    // console.log(allshirts);
     res.render("shirt.ejs", { allshirts });
   })
 );
@@ -154,6 +166,7 @@ router.post("/shirts", upload.single("shirt[image]"), async (req, res) => {
   let filename = req.file.filename;
   let newshirt = new Shirt(req.body.shirt);
   newshirt.image = { url, filename };
+  newshirt.owner = req.user._id;
   await newshirt.save();
   req.flash("success", "New shirt added");
   res.redirect("/shirts");
@@ -163,7 +176,9 @@ router.post("/shirts", upload.single("shirt[image]"), async (req, res) => {
 router.get(
   "/pants", isAuthenticated,
   wrapAsync(async (req, res) => {
-    const allpants = await Pant.find({});
+    const currUser = req.user;
+    // await Pant.updateMany({}, { owner: currUser._id });
+    const allpants = await Pant.find({ owner: currUser._id });
     res.render("pant.ejs", { allpants });
   })
 );
@@ -177,6 +192,7 @@ router.post("/pants", upload.single("pant[image]"), async (req, res) => {
   let filename = req.file.filename;
   let newpant = new Pant(req.body.pant);
   newpant.image = { url, filename };
+  newpant.owner = req.user._id;
   await newpant.save();
   req.flash("success", "New Pant added successfully");
   res.redirect("/pants");
@@ -189,6 +205,7 @@ router.get("/shirts/:id/edit", isAuthenticated, async (req, res) => {
   res.render("shirtsEdit.ejs", { ThisShirt });
 });
 
+// updating the shirt
 router.put("/shirt/:id", upload.single("shirt[image]"), async (req, res) => {
   let { id } = req.params;
   const shirt = await Shirt.findByIdAndUpdate(id, { ...req.body.shirt });
@@ -220,6 +237,7 @@ router.get("/pants/:id/edit",  isAuthenticated,async (req, res) => {
   res.render("pantsEdit.ejs", { ThisPant });
 });
 
+// updating the pant
 router.put("/pant/:id", isAuthenticated, upload.single("pant[image]"), async (req, res) => {
   let { id } = req.params;
   const pant = await Pant.findByIdAndUpdate(id, { ...req.body.pant });
@@ -246,7 +264,7 @@ router.delete("/pant/:id", isAuthenticated, async (req, res) => {
 
 //occasion
 router.get(
-  "/occasion", isAuthenticated,
+  "/occasion", 
   wrapAsync(async (req, res) => {
     const allOccasion = await Occasion.find({});
     res.render("occasion.ejs", { allOccasion });
@@ -254,7 +272,7 @@ router.get(
 );
 
 router.get(
-  "/occasions/:id", isAuthenticated,
+  "/occasions/:id", 
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     console.log(id);
@@ -311,8 +329,9 @@ router.post("/:id/favorite", async (req, res) => {
 
 //showing favorite
 router.get("/favorite",  isAuthenticated,async (req, res) => {
-  const favShirts = await Shirt.find({ favorite: true });
-  const favPants = await Pant.find({ favorite: true });
+  const currUser = req.user;
+  const favShirts = await Shirt.find({ favorite: true, owner: currUser });
+  const favPants = await Pant.find({ favorite: true, owner: currUser });
   res.render("favorite.ejs", { favPants, favShirts });
 });
 
@@ -338,25 +357,20 @@ router.post("/ocas", upload.single("image"), async (req, res) => {
 // search bar
 router.post("/search", isAuthenticated, async (req, res) => {
   try {
+    const currUser = req.user;
     const searchItem = req.body.clothe;
-
-    // Search both collections
-    // const shirts = await Shirt.find(
-    //   { title: { $regex: searchItem, $options: "i" } },
-    //   { title: 1 }
-    // );
     const shirts = await Shirt.find({
       $or: [
         { title: { $regex: searchItem, $options: "i" } }, // Search in title
         { dressType: { $regex: searchItem, $options: "i" } }, // Search in dressType
-      ],
+      ], owner:currUser,
     });
     console.log(shirts);
     const pants = await Pant.find({
       $or: [
         { title: { $regex: searchItem, $options: "i" } }, // Search in title
         { dressType: { $regex: searchItem, $options: "i" } }, // Search in dressType
-      ],
+      ], owner:currUser,
     });
 
     // Format results (lowercase title)
@@ -374,7 +388,7 @@ router.post("/search", isAuthenticated, async (req, res) => {
     if (formattedShirts.length === 0 && formattedPants.length === 0) {
       return res
         .status(404)
-        .json({ message: `No Shirt or Pant found with title: ${searchItem}` });
+        .render("nosearchFound.ejs", {searchItem});
     }
     // storing only ids of found items
     const PantIds = formattedPants.map((item) => item._id);
