@@ -332,17 +332,22 @@ router.post("/:id/favorite", async (req, res) => {
   if (shirtPant == null) {
     shirtPant = await Shirt.findById(id);
   }
-  console.log(shirtPant);
-  let favorite = await shirtPant.favorite;
-  if (favorite) {
+   if (!shirtPant) {
+    req.flash("error", "Clothing item not found.");
+    return res.redirect("/collection");
+  }
+
+  // Check current status and toggle
+  if (shirtPant.favorite) {
     shirtPant.favorite = false;
+    await shirtPant.save();
+    req.flash("success", "Removed from Favorite");
   } else {
     shirtPant.favorite = true;
+    await shirtPant.save();
+    req.flash("success", "Successfully added to Favorite");
   }
-  await shirtPant.save();
-  console.log(shirtPant.favorite);
-  // console.log(favorite);
-  req.flash("success", "Added to Favorite");
+
   res.redirect("/collection");
 });
 
@@ -443,13 +448,12 @@ router.post(
     failureFlash: true,
   }),
   async (req, res) => {
-    req.flash("success", "welcome back to Wardrobe");
+    req.flash("success", "Logged in successfully");
     res.redirect("/");
   }
 );
 
 // logout
-
 router.get("/logout", (req,res,next)=>{
   req.logOut(err =>{
     if(err){

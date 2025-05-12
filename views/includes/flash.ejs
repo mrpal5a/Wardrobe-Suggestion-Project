@@ -1,15 +1,40 @@
-<% if(success && success.length) { %> <!-- as success is a array, so even though there is no succes it will be empty and we will get the empty success div.-->
+<%# if(success && success.length) { %> <!-- as success is a array, so even though there is no succes it will be empty and we will get the empty success div.-->
     <!-- to solve this problem we add 1 more condition like if success.length it means it has no element-->
-<div class="alert alert-success mt-3 alert-dismissible fade show" role="alert">
-    <%= success %> <!--this will triger success key of flash -->
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+<!-- <div class="alert alert-success mt-3 alert-dismissible fade show" role="alert"> -->
+    <%# success %> <!--this will triger success key of flash -->
+    <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+<!-- </div> -->
+<%# } %>
+
+<%# if(error && error.length) { %> <!-- as success is a array, so even though there is no succes it will be empty and we will get the empty success div.-->
+    <!-- to solve this problem we add 1 more condition like if success.length it means it has no element-->
+<!-- <div class="alert alert-danger mt-3 alert-dismissible fade show" role="alert"> -->
+    <%# error %> <!--this will triger success key of flash -->
+    <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+<!-- </div> -->
+<%# } %>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<% if (success && success.length > 0) { %>
+  <script>
+    Swal.fire({
+      icon: 'success',
+      title: 'Success!',
+      text: '<%= success[0] %>',
+      confirmButtonText: 'OK'
+    });
+  </script>
 <% } %>
 
-<% if(error && error.length) { %> <!-- as success is a array, so even though there is no succes it will be empty and we will get the empty success div.-->
-    <!-- to solve this problem we add 1 more condition like if success.length it means it has no element-->
-<div class="alert alert-danger mt-3 alert-dismissible fade show" role="alert">
-    <%= error %> <!--this will triger success key of flash -->
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+<% if (error && error.length > 0) { %>
+  <script>
+    Swal.fire({
+      icon: 'error',
+      title: 'Error!',
+      text: '<%= error[0] %>',
+      confirmButtonText: 'OK'
+    });
+  </script>
 <% } %>
