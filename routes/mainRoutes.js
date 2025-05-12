@@ -503,11 +503,16 @@ router.post("/forgot-password", async (req, res) => {
     text: `Click the following link to reset your password:\n\nhttp://${req.headers.host}/reset-password/${token} This email is from Wardrobe Team. Plese Do not reply`
   };
 
-  await transporter.sendMail(mailOptions).catch((err) => {
+  try {
+  await transporter.sendMail(mailOptions);
+  req.flash("success", "An email has been sent to reset your password.");
+  res.redirect("/login");
+} catch (err) {
   console.error("Email failed to send:", err);
   req.flash("error", "Failed to send email. Try again.");
-  return res.redirect("/login");
-});
+  res.redirect("/forgot-password");
+}
+
 
 });
 
