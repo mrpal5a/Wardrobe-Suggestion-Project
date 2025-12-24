@@ -402,8 +402,8 @@ router.post("/search", isAuthenticated, async (req, res) => {
     // searching the items on the basis of ids in both the models
     const foundpants = await Pant.find({ _id: { $in: PantIds } });
     const foundshirts = await Shirt.find({ _id: { $in: ShirtIds } });
-    console.log(foundpants);
-    console.log(foundshirts);
+    // console.log(foundpants);
+    // console.log(foundshirts);
     res.render("search.ejs", { pants: foundpants, shirts: foundshirts });
   } catch (error) {
     console.error("Search error:", error);
